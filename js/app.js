@@ -79,12 +79,8 @@ class TaskManager {
     getCompletedTaskCount() {
         return this.tasks.filter(task => task.completed).length;
     }
-}
 
-// Initialize the app
-const taskManager = new TaskManager();
-
-// Add to the TaskManager class
+    // Add to the TaskManager class
 filterTasks(filter) {
     const allTasks = document.querySelectorAll('.task-item');
     
@@ -135,3 +131,8 @@ addFilterButtons() {
         }
     });
 }
+}
+
+// Initialize the app
+const taskManager = new TaskManager();
+
