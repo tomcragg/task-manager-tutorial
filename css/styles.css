@@ -97,3 +97,30 @@ h1 {
     background: #e74c3c;
     color: white;
 }
+
+.filter-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    border: 2px solid #3498db;
+    background: white;
+    color: #3498db;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.filter-btn:hover {
+    background: #3498db;
+    color: white;
+}
+
+.filter-btn.active {
+    background: #3498db;
+    color: white;
+}

@@ -13,6 +13,7 @@ class TaskManager {
         this.taskInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.addTask();
         });
+        this.addFilterButtons(); // Add this line
         this.renderTasks();
     }
 
@@ -82,3 +83,55 @@ class TaskManager {
 
 // Initialize the app
 const taskManager = new TaskManager();
+
+// Add to the TaskManager class
+filterTasks(filter) {
+    const allTasks = document.querySelectorAll('.task-item');
+    
+    allTasks.forEach(task => {
+        const isCompleted = task.classList.contains('completed');
+        
+        switch(filter) {
+            case 'active':
+                task.style.display = isCompleted ? 'none' : 'flex';
+                break;
+            case 'completed':
+                task.style.display = isCompleted ? 'flex' : 'none';
+                break;
+            case 'all':
+            default:
+                task.style.display = 'flex';
+                break;
+        }
+    });
+}
+
+// Add filter buttons functionality
+addFilterButtons() {
+    const filterContainer = document.createElement('div');
+    filterContainer.className = 'filter-container';
+    filterContainer.innerHTML = `
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="active">Active</button>
+        <button class="filter-btn" data-filter="completed">Completed</button>
+    `;
+    
+    document.querySelector('.container').insertBefore(
+        filterContainer, 
+        document.getElementById('taskList')
+    );
+    
+    // Add event listeners
+    filterContainer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('filter-btn')) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => 
+                btn.classList.remove('active')
+            );
+            // Add active class to clicked button
+            e.target.classList.add('active');
+            // Filter tasks
+            this.filterTasks(e.target.dataset.filter);
+        }
+    });
+}
