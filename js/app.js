@@ -133,6 +133,13 @@ addFilterButtons() {
 }
 }
 
+console.log(typeof module);  // "undefined"
+
+// For Node.js testing
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { TaskManager };
+}
+
 // Initialize the app
 const taskManager = new TaskManager();
 
