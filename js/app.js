@@ -133,13 +133,13 @@ addFilterButtons() {
 }
 }
 
-console.log(typeof module);  // "undefined"
+// Initialize the app only in browser environment
+if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+    const taskManager = new TaskManager();
+}
 
 // For Node.js testing
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { TaskManager };
 }
-
-// Initialize the app
-const taskManager = new TaskManager();
 

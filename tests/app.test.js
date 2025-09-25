@@ -14,7 +14,16 @@ describe('TaskManager', () => {
   let taskManager;
 
   beforeEach(() => {
+    // Clear localStorage and reset DOM
     localStorage.clear();
+    document.body.innerHTML = `
+      <div class="container">
+        <input type="text" id="taskInput" placeholder="Add a new task...">
+        <button id="addTaskBtn">Add Task</button>
+        <ul id="taskList"></ul>
+      </div>
+    `;
+    // Create TaskManager AFTER DOM is set up
     taskManager = new TaskManager();
   });
 
