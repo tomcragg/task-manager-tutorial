@@ -91,10 +91,12 @@ The application uses Jest with jsdom for unit testing:
    - Triggers on pushes to main/develop branches and PRs
    - Matrix testing across Node.js versions (18.x, 20.x, 22.x)
    - Runs tests with coverage reporting
-   - Creates build artifacts for deployment readiness
+   - Creates build artifacts using `actions/upload-artifact@v4`
+   - Optional Codecov integration with `codecov/codecov-action@v4`
 
 2. **Deployment** (`deploy.yml`):
    - Auto-deploys to GitHub Pages on main branch pushes
+   - Uses latest GitHub Pages actions (v3-v5)
    - Static site deployment without build compilation
    - Accessible at the repository's GitHub Pages URL
 
@@ -136,4 +138,31 @@ node --version
 
 # If using Node.js 16.x and need compatibility, downgrade Jest:
 npm install --save-dev jest@^29.7.0 jest-environment-jsdom@^29.7.0
+```
+
+## GitHub Actions Maintenance
+
+### Action Versions
+The workflows use current stable versions of GitHub Actions:
+- `actions/checkout@v4`
+- `actions/setup-node@v4` 
+- `actions/upload-artifact@v4` (migrated from deprecated v3)
+- `actions/configure-pages@v5`
+- `actions/upload-pages-artifact@v3`
+- `actions/deploy-pages@v4`
+- `codecov/codecov-action@v4`
+
+### Deprecation Monitoring
+Monitor for action deprecation notices:
+- GitHub regularly deprecates older action versions
+- Failed workflows may indicate deprecated actions
+- Check [GitHub Changelog](https://github.blog/changelog/) for announcements
+
+### Common Deprecation Fixes
+```bash
+# Check for deprecated actions in workflows
+grep -r "uses:" .github/workflows/
+
+# Update action versions when deprecated
+# Example: v3 → v4 artifact actions (deprecated Jan 2025)
 ```
