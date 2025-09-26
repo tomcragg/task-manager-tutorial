@@ -25,6 +25,8 @@ describe('TaskManager', () => {
     `;
     // Create TaskManager AFTER DOM is set up
     taskManager = new TaskManager();
+    // Initialize the TaskManager to set up event listeners
+    taskManager.init();
   });
 
   test('should initialize with empty task list', () => {

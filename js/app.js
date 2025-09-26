@@ -5,7 +5,6 @@ class TaskManager {
         this.addTaskBtn = document.getElementById('addTaskBtn');
         this.taskList = document.getElementById('taskList');
         
-        this.init();
     }
 
     init() {
@@ -133,9 +132,10 @@ addFilterButtons() {
 }
 }
 
-// Initialize the app only in browser environment
-if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+// Initialize the app only in browser environment (not in Node/test environment)
+if (typeof window !== 'undefined' && typeof document !== 'undefined' && typeof module === 'undefined') {
     const taskManager = new TaskManager();
+    taskManager.init();
 }
 
 // For Node.js testing
