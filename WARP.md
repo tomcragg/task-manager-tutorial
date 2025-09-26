@@ -48,6 +48,9 @@ gh workflow run deploy.yml
 # View workflow runs
 gh run list --workflow=ci.yml
 gh run list --workflow=deploy.yml
+
+# Check specific workflow run details
+gh run view [run-id]
 ```
 
 ## Architecture Overview
@@ -86,7 +89,7 @@ The application uses Jest with jsdom for unit testing:
 
 1. **Continuous Integration** (`ci.yml`):
    - Triggers on pushes to main/develop branches and PRs
-   - Matrix testing across Node.js versions (16.x, 18.x, 20.x)
+   - Matrix testing across Node.js versions (18.x, 20.x, 22.x)
    - Runs tests with coverage reporting
    - Creates build artifacts for deployment readiness
 
@@ -111,3 +114,26 @@ Task actions (complete/delete buttons) use inline onclick handlers that referenc
 
 ### Filter System
 The filtering mechanism manipulates CSS display properties rather than re-rendering the task list, providing efficient view switching without DOM manipulation overhead.
+
+## Node.js Compatibility
+
+### Current Requirements
+- **Minimum Node.js Version**: 18.14.0+
+- **Jest Version**: 30.x requires Node.js 18+
+- **CI Testing**: Runs on Node.js 18.x, 20.x, and 22.x
+
+### Version Compatibility Issues
+If you encounter `TypeError: (0, _os(...).availableParallelism) is not a function` errors:
+
+1. **Root Cause**: Jest 30.x uses `os.availableParallelism()` which requires Node.js 18.14.0+
+2. **Solutions**:
+   - **Recommended**: Upgrade to Node.js 18+ (Node.js 16 reached EOL in Sept 2023)
+   - **Alternative**: Downgrade Jest to 29.x for Node.js 16 compatibility
+
+```bash
+# Check your Node.js version
+node --version
+
+# If using Node.js 16.x and need compatibility, downgrade Jest:
+npm install --save-dev jest@^29.7.0 jest-environment-jsdom@^29.7.0
+```
